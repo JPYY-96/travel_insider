@@ -5,14 +5,14 @@ from pathlib import Path
 from colorama import Fore, Style
 from dateutil.parser import parse
 
-from taxifare.params import *
-from taxifare.ml_logic.data import get_data_with_cache, clean_data, load_data_to_bq
-from taxifare.ml_logic.model import initialize_model, compile_model, train_model, evaluate_model
-from taxifare.ml_logic.preprocessor import preprocess_features
-from taxifare.ml_logic.registry import load_model, save_model, save_results
-from taxifare.ml_logic.registry import mlflow_run, mlflow_transition_model
+from searchdate.params import *
+from searchdate.ml_logic.data import get_data_with_cache, clean_data, load_data_to_bq
+from searchdate.ml_logic.model import initialize_model, compile_model, train_model, evaluate_model
+from searchdate.ml_logic.preprocessor import preprocess_features
+from searchdate.ml_logic.registry import load_model, save_model, save_results
+from searchdate.ml_logic.registry import mlflow_run, mlflow_transition_model
 
-def preprocess(min_date:str = '2009-01-01', max_date:str = '2015-01-01') -> None:
+def preprocess() -> None:
     """
     - Query the raw dataset from Le Wagon's BigQuery dataset
     - Cache query result as a local CSV if it doesn't exist locally
@@ -23,19 +23,16 @@ def preprocess(min_date:str = '2009-01-01', max_date:str = '2015-01-01') -> None
 
     print(Fore.MAGENTA + "\n ⭐️ Use case: preprocess" + Style.RESET_ALL)
 
-    # Query raw data from BigQuery using `get_data_with_cache`
-    min_date = parse(min_date).strftime('%Y-%m-%d') # e.g '2009-01-01'
-    max_date = parse(max_date).strftime('%Y-%m-%d') # e.g '2009-01-01'
 
     query = f"""
-        SELECT {",".join(COLUMN_NAMES_RAW)}
-        FROM `{GCP_PROJECT_WAGON}`.{BQ_DATASET}.raw_{DATA_SIZE}
-        WHERE pickup_datetime BETWEEN '{min_date}' AND '{max_date}'
-        ORDER BY pickup_datetime
+        SELECT *
+        FROM `{GCP_PROJECT}`.{BQ_DATASET}
     """
 
+
+
     # Retrieve data using `get_data_with_cache`
-    data_query_cache_path = Path(LOCAL_DATA_PATH).joinpath("raw", f"query_{min_date}_{max_date}_{DATA_SIZE}.csv")
+    data_query_cache_path = Path(LOCAL_DATA_PATH).joinpath("raw", f"query_{DATA_SIZE}.csv")
     data_query = get_data_with_cache(
         query=query,
         gcp_project=GCP_PROJECT,
@@ -43,11 +40,9 @@ def preprocess(min_date:str = '2009-01-01', max_date:str = '2015-01-01') -> None
         data_has_header=True
     )
 
-    # Process data
-    data_clean = clean_data(data_query)
 
-    X = data_clean.drop("fare_amount", axis=1)
-    y = data_clean[["fare_amount"]]
+    X = data_query.drop("totalFare", axis=1)
+    y = data_query[["totalFare"]]
 
     X_processed = preprocess_features(X)
 

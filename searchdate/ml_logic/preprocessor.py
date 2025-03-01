@@ -7,7 +7,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.compose import ColumnTransformer, make_column_transformer
 from sklearn.preprocessing import OneHotEncoder, FunctionTransformer
 
-from taxifare.ml_logic.encoders import transform_time_features, transform_lonlat_features, compute_geohash
+from searchdate.ml_logic.encoders import transform_time_features, transform_lonlat_features, compute_geohash
 
 
 def preprocess_features(X: pd.DataFrame) -> np.ndarray:
@@ -18,6 +18,8 @@ def preprocess_features(X: pd.DataFrame) -> np.ndarray:
 
         Stateless operation: "fit_transform()" equals "transform()".
         """
+
+        X['days_to_flight'] = (X['flightDate'] - X['searchDate']).dt.days
 
         # PASSENGER PIPE
         p_min = 1

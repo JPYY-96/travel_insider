@@ -6,37 +6,6 @@ from pathlib import Path
 
 from taxifare.params import *
 
-def clean_data(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Clean raw data by
-    - assigning correct dtypes to each column
-    - removing buggy or irrelevant transactions
-    """
-    # Compress raw_data by setting types to DTYPES_RAW
-    df = df.astype(DTYPES_RAW)
-
-    # Remove buggy transactions
-    df = df.drop_duplicates()  # TODO: handle whether data is consumed in chunks directly in the data source
-    df = df.dropna(how='any', axis=0)
-
-    df = df[(df.dropoff_latitude != 0) | (df.dropoff_longitude != 0) |
-                    (df.pickup_latitude != 0) | (df.pickup_longitude != 0)]
-
-    df = df[df.passenger_count > 0]
-    df = df[df.fare_amount > 0]
-
-    # Remove geographically irrelevant transactions (rows)
-    df = df[df.fare_amount < 400]
-    df = df[df.passenger_count < 8]
-
-    df = df[df["pickup_latitude"].between(left=40.5, right=40.9)]
-    df = df[df["dropoff_latitude"].between(left=40.5, right=40.9)]
-    df = df[df["pickup_longitude"].between(left=-74.3, right=-73.7)]
-    df = df[df["dropoff_longitude"].between(left=-74.3, right=-73.7)]
-
-    print("✅ data cleaned")
-
-    return df
 
 def get_data_with_cache(
         gcp_project:str,
@@ -86,7 +55,7 @@ def load_data_to_bq(
 
     # 🎯 HINT for "*** TypeError: expected bytes, int found":
     # After preprocessing the data, your original column names are gone (print it to check),
-    # so ensure that your column names are *strings* that start with either 
+    # so ensure that your column names are *strings* that start with either
     # a *letter* or an *underscore*, as BQ does not accept anything else
 
     # TODO: simplify this solution if possible, but students may very well choose another way to do it
