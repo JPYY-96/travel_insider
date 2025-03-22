@@ -5,8 +5,8 @@ import joblib
 from datetime import datetime, timedelta
 
 # === Load model + encoder ===
-model = joblib.load("final_regression_model_22mar.joblib")
-encoder = joblib.load("encoder.joblib")
+model = joblib.load("file_for_streamlit/final_regression_model_22mar.joblib")
+encoder = joblib.load("file_for_streamlit/encoder.joblib")
 
 st.title("✈️ Best Flight Booking Date Advisor")
 st.markdown("Select your route and flight date to find the best day to book.")
