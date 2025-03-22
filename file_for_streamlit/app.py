@@ -12,8 +12,10 @@ st.title("✈️ Best Flight Booking Date Advisor")
 st.markdown("Select your route and flight date to find the best day to book.")
 
 # === User Inputs ===
-startingAirport = st.selectbox("From", ["JFK", "LAX", "SFO", "ORD"])
-destinationAirport = st.selectbox("To", ["ATL", "BOS", "CLT", "DEN"])
+startingAirport = st.selectbox("From", ["ATL", "DFW", "DEN", "ORD", "LAX", "CLT", "MIA", "JFK", "EWR", "SFO", "DTW", "BOS", "PHL", "LGA", "IAD", "OAK"]
+)
+destinationAirport = st.selectbox("To", ["ATL", "DFW", "DEN", "ORD", "LAX", "CLT", "MIA", "JFK", "EWR", "SFO", "DTW", "BOS", "PHL", "LGA", "IAD", "OAK"]
+)
 airline = st.selectbox("Airline", ["American Airlines", "Delta", "United"])
 
 min_flight_date = datetime.today().date() + timedelta(days=1)
