@@ -5,7 +5,4 @@ numpy
 joblib
 streamlit
 python-dateutil
-protobuf
-h5py
-tensorflow
-keras
+
