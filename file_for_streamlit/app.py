@@ -5,7 +5,7 @@ import joblib
 from datetime import datetime, timedelta
 
 # === Load model + encoder ===
-model = joblib.load("file_for_streamlit/final_regression_model_22mar.joblib")
+model = load_model("file_for_streamlit/LSTMv2.keras")
 encoder = joblib.load("file_for_streamlit/encoder.joblib")
 
 st.title("✈️ Best Flight Booking Date Advisor")
