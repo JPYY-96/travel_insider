@@ -1,11 +1,11 @@
 scikit-learn
 xgboost
 pandas
-numpy==1.23.5
+numpy
 joblib
 streamlit
 python-dateutil
 protobuf
 h5py
-tensorflow==2.10.1
-keras==2.10.0
+tensorflow
+keras
