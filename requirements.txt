@@ -4,5 +4,6 @@ xgboost
 pandas
 numpy
 joblib
+tensorflow
 
 python-dateutil
