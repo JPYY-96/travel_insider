@@ -8,3 +8,4 @@ python-dateutil
 protobuf
 h5py
 tensorflow==2.10.1
+keras==2.10.0
