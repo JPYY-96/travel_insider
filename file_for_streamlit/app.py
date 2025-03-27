@@ -6,7 +6,7 @@ from tensorflow.keras.models import load_model
 from datetime import datetime, timedelta
 
 # === Load model + encoder ===
-model = load_model("file_for_streamlit/LSTMv2.h5")
+model =  joblib.load("file_for_streamlit/final_regression_model_22mar.joblib")
 encoder = joblib.load("file_for_streamlit/encoder.joblib")
 
 st.title("✈️ Best Flight Booking Date Advisor")
