@@ -4,7 +4,7 @@ pandas
 numpy
 joblib
 streamlit
-tensorflow
 python-dateutil
 protobuf
 h5py
+tensorflow==2.12.0
