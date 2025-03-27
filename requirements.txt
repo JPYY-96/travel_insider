@@ -6,3 +6,5 @@ joblib
 streamlit
 tensorflow
 python-dateutil
+protobuf
+h5py
