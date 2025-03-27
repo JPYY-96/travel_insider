@@ -8,6 +8,17 @@ from datetime import datetime, timedelta
 model =  joblib.load("file_for_streamlit/final_regression_model_22mar.joblib")
 encoder = joblib.load("file_for_streamlit/encoder.joblib")
 
+if hasattr(model, "feature_importances_"):
+    feature_importance = pd.DataFrame(
+        {"Feature": X.columns, "Importance": model.feature_importances_}
+    ).sort_values(by="Importance", ascending=False)
+
+    st.subheader("📊 Feature Importance")
+    st.dataframe(feature_importance)
+else:
+    st.warning("⚠️ This model does not support feature importance display.")
+
+
 st.title("✈️ Best Flight Booking Date Advisor")
 st.markdown("Select your route and flight date to find the best day to book.")
 
