@@ -2,10 +2,12 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
+from tensorflow.keras.models import load_model
+from sklearn.preprocessing import StandardScaler
 from datetime import datetime, timedelta
 
 # === Load model + encoder ===
-model = joblib.load("file_for_streamlit/LSTM.joblib")
+model = load_model("file_for_streamlit/LSTM.joblib")
 encoder = joblib.load("file_for_streamlit/encoderv2.joblib")
 
 st.title("✈️ Best Flight Booking Date Advisor")
