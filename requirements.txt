@@ -1,10 +1,8 @@
-
 scikit-learn
 xgboost
 pandas
 numpy
 joblib
-
-streamlit==1.25.0
-tensorflow==2.10.0
+streamlit
+tensorflow
 python-dateutil
